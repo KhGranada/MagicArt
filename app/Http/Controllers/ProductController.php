@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 /**
  * Class ProductController
  * @package App\Http\Controllers
@@ -18,10 +18,14 @@ class ProductController extends Controller
      */
     public function index()
     {
+        if (Auth::check()) {
         $products = Product::paginate();
 
         return view('product.index', compact('products'))
             ->with('i', (request()->input('page', 1) - 1) * $products->perPage());
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -48,7 +52,7 @@ class ProductController extends Controller
         $product = Product::create($request->all());
 
         return redirect()->route('products.index')
-            ->with('success', 'Product created successfully.');
+            ->with('success', 'Producto creado con éxito.');
     }
 
     /**

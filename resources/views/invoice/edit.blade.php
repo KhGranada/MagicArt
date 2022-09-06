@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Update Setting
+    Update Invoice
 @endsection
 
 @section('content')
@@ -13,14 +13,14 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Actualización de datos de empresa</span>
+                        <span class="card-title">Update Invoice</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('settings.update', $setting->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('invoices.update', $invoice->id) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 
-                            @include('setting.form')
+                            @include('invoice.form')
 
                         </form>
                     </div>

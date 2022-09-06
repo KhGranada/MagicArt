@@ -1,6 +1,6 @@
 <div class="box box-info padding-1">
-    <div class="box-body">
-        
+    <div class="box-body row">
+        <div class="col-sm-8 col-xs-12">
         <div class="form-group">
             {{ Form::label('nombre') }}
             {{ Form::text('nombre', $setting->nombre, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
@@ -21,14 +21,16 @@
             {{ Form::text('nit', $setting->nit, ['class' => 'form-control' . ($errors->has('nit') ? ' is-invalid' : ''), 'placeholder' => 'Nit']) }}
             {!! $errors->first('nit', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-        <div class="form-group">
-            {{ Form::label('logo') }}
-            {{ Form::text('logo', $setting->logo, ['class' => 'form-control' . ($errors->has('logo') ? ' is-invalid' : ''), 'placeholder' => 'Logo']) }}
-            {!! $errors->first('logo', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-
+        <div class="col-sm-4 col-xs-12">
+            <div class="form-group">
+                {{ Form::label('logo') }}
+                {{ Form::text('logo', $setting->logo, ['class' => 'form-control' . ($errors->has('logo') ? ' is-invalid' : ''), 'placeholder' => 'Logo']) }}
+                {!! $errors->first('logo', '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+        </div>
     </div>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
 </div>

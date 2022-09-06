@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\ChartJSController;
 
 use Illuminate\Http\Request;
 

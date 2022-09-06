@@ -5,25 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Invoice
+ * Class Contact
  *
  * @property $id
- * @property $codigo
- * @property $id_cliente
- * @property $valor_factura
+ * @property $name
+ * @property $email
+ * @property $phone
+ * @property $subject
+ * @property $message
  * @property $created_at
  * @property $updated_at
  *
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class Invoice extends Model
+class Contact extends Model
 {
     
     static $rules = [
-		'codigo' => 'required',
-		'id_cliente' => 'required',
-		'valor_factura' => 'required',
+		'name' => 'required',
+		'email' => 'required',
+		'phone' => 'required',
+		'subject' => 'required',
+		'message' => 'required',
     ];
 
     protected $perPage = 20;
@@ -33,7 +37,7 @@ class Invoice extends Model
      *
      * @var array
      */
-    protected $fillable = ['codigo','id_cliente','valor_factura'];
+    protected $fillable = ['name','email','phone','subject','message'];
 
 
 

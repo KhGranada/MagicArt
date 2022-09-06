@@ -1,10 +1,10 @@
 <!-- Footer -->
-<footer class="text-center text-lg-start bg-light text-muted col-sm-12 col-xs-12 position-absolute" style="bottom:0">
+<footer class="text-center text-lg-start bg-light text-muted col-sm-12 col-xs-12 position-relative" style="bottom:0">
   <!-- Section: Social media -->
   <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
     <!-- Left -->
     <div class="me-5 d-none d-lg-block">
-      <span>Siguenos en nuestras redes:</span>
+      <span>Síguenos en nuestras redes:</span>
     </div>
     <!-- Left -->
 
@@ -44,7 +44,7 @@
           <h6 class="text-uppercase fw-bold mb-4">
             <i class="fas fa-gem me-3"></i>Magic Art
           </h6>
-          <p> conoce nuestro catalogo de productos de arte fabricados en colombia 100% artesanales y hecho con <il class="fa fa-heart"></il></p>
+          <p> conoce nuestro catalogo de productos de arte fabricados en Colombia 100% artesanales y hecho con <il class="fa fa-heart"></il></p>
         </div>
         <!-- Grid column -->
 

@@ -18,10 +18,12 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $settings = Setting::paginate();
+        $id=1;
+        $setting = Setting::find($id);
 
-        return view('setting.index', compact('settings'))
-            ->with('i', (request()->input('page', 1) - 1) * $settings->perPage());
+        
+        return view('setting.edit', compact('setting'));
+        
     }
 
     /**
@@ -29,11 +31,11 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+  /*  public function create()
     {
         $setting = new Setting();
         return view('setting.create', compact('setting'));
-    }
+    }*/
 
     /**
      * Store a newly created resource in storage.
@@ -47,34 +49,23 @@ class SettingController extends Controller
 
         $setting = Setting::create($request->all());
 
+        $validatedData = $request->validate([
+            'file' => 'required|csv,txt,xlx,xls,pdf|max:2048',
+    
+           ]);
+    
+           $name = $request->file('file')->getClientOriginalName();
+    
+           $path = $request->file('file')->store('public/files');
+    
+    
+           $save = new File;
+    
+           $save->name = $name;
+           $save->path = $path;
+           
         return redirect()->route('settings.index')
-            ->with('success', 'Setting created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $setting = Setting::find($id);
-
-        return view('setting.show', compact('setting'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $setting = Setting::find($id);
-
-        return view('setting.edit', compact('setting'));
+            ->with('success', 'Configuración de empresa creada con exito.');
     }
 
     /**
