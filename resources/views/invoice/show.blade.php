@@ -1,41 +1,111 @@
 @extends('layouts.app')
-
-@section('template_title')
-    {{ $invoice->name ?? 'Show Invoice' }}
-@endsection
-
 @section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="float-left">
-                            <span class="card-title">Show Invoice</span>
-                        </div>
-                        <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('invoices.index') }}"> Back</a>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        
-                        <div class="form-group">
-                            <strong>Codigo:</strong>
-                            {{ $invoice->codigo }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Id Cliente:</strong>
-                            {{ $invoice->id_cliente }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Valor Factura:</strong>
-                            {{ $invoice->valor_factura }}
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex">
+          <h2>{{ __('Frontend/frontend.invoice', ['invoice_number' => $invoice->invoice_number]) }}</h2>
+          <a href="{{ route('invoice.index') }}"
+            class="btn btn-primary ml-auto pt-2"><i class="fa fa-home"></i>
+            {{ __('Frontend/frontend.back_to_invoice') }}</a>
         </div>
-    </section>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <tr>
+                <th>{{ __('Frontend/frontend.customer_name') }}</th>
+                <td>{{ $invoice->customer_name }}</td>
+                <th>{{ __('Frontend/frontend.customer_email') }}</th>
+                <td>{{ $invoice->customer_email }}</td>
+              </tr>
+              <tr>
+                <th>{{ __('Frontend/frontend.customer_mobile') }}</th>
+                <td>{{ $invoice->customer_mobile }}</td>
+                <th>{{ __('Frontend/frontend.company_name') }}</th>
+                <td>{{ $invoice->company_name }}</td>
+              </tr>
+              <tr>
+                <th>{{ __('Frontend/frontend.invoice_number') }}</th>
+                <td>{{ $invoice->invoice_number }}</td>
+                <th>{{ __('Frontend/frontend.invoice_date') }}</th>
+                <td>{{ $invoice->invoice_date }}</td>
+              </tr>
+            </table>
+
+            <h3 class="text-primary ">{{ __('Frontend/frontend.invoice_details') }}</h3>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>{{ __('Frontend/frontend.product_name') }}</th>
+                  <th>{{ __('Frontend/frontend.unit') }}</th>
+                  <th>{{ __('Frontend/frontend.quantity') }}</th>
+                  <th>{{ __('Frontend/frontend.unit_price') }}</th>
+                  <th>{{ __('Frontend/frontend.product_subtotal') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($invoice->details as $item)
+                  <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->product_name }}</td>
+                    <td>{{ $item->unitText() }}</td>
+                    <td>{{ $item->quantity }}</td>
+                    <td>{{ $item->unit_price }}</td>
+                    <td>{{ $item->row_sub_total }}</td>
+                  </tr>
+                @endforeach
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3"></td>
+                  <th colspan="2">{{ __('Frontend/frontend.sub_total') }}</th>
+                  <td>{{ $invoice->sub_total }}</td>
+                </tr>
+                <tr>
+                  <td colspan="3"></td>
+                  <th colspan="2">{{ __('Frontend/frontend.discount') }}</th>
+                  <td>{{ $invoice->discountResult() }}</td>
+                </tr>
+                <tr>
+                  <td colspan="3"></td>
+                  <th colspan="2">{{ __('Frontend/frontend.vat') }}</th>
+                  <td>{{ $invoice->vat_value }}</td>
+                </tr>
+                <tr>
+                  <td colspan="3"></td>
+                  <th colspan="2">{{ __('Frontend/frontend.shipping') }}</th>
+                  <td>{{ $invoice->shipping }}</td>
+                </tr>
+                <tr>
+                  <td colspan="3"></td>
+                  <th colspan="2">{{ __('Frontend/frontend.total_due') }}</th>
+                  <td>{{ $invoice->total_due }}</td>
+                </tr>
+
+              </tfoot>
+            </table>
+          </div>
+
+          <div class="row">
+            <div class="col-12 text-center">
+              <a href="{ { route ('invoice. print', $invoice) } }"
+                class="btn btn-primary  ml-auto"><i class="fa fa-print"></i>
+                {{ __('Frontend/frontend.print') }}</a>
+              <a href="{ { route('invoice.pdf', $invoice) } }"
+                class="btn btn-secondary  ml-auto"><i class="fa fa-file-pdf"></i>
+                {{ __('Frontend/frontend.export_pdf') }}</a>
+              {{-- <a href="{{ route('invoice.send_to_email', $invoice) }}"
+                class="btn btn-success  ml-auto"><i class="fa fa-envelope"></i>
+                {{ __('Frontend/frontend.send_to_email') }}</a> --}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 @endsection

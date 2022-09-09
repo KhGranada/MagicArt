@@ -15,9 +15,18 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo');
-            $table->integer('id_cliente');
-            $table->double('valor_factura');
+            $table->string('customer_name');
+            $table->string('customer_email')->nullable();
+            $table->string('customer_mobile')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('invoice_number');
+            $table->date('invoice_date');
+            $table->decimal('sub_total', 8, 2)->default(0.00);
+            $table->string('discount_type')->nullable();
+            $table->decimal('discount_value', 8, 2)->default(0.00);
+            $table->decimal('vat_value', 8, 2)->default(0.00);
+            $table->decimal('shipping', 8, 2)->default(0.00)->nullable();
+            $table->decimal('total_due', 8, 2)->default(0.00);
             $table->timestamps();
         });
     }

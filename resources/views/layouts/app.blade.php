@@ -3,11 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="{{ asset('frontend/css/fontawesome/all.min.css') }}"  rel="stylesheet">
+
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -15,7 +17,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('frontend/js/custom.js') }}" defer></script>
 
+<script src="{{ asset('frontend/js/pickadate/picker.js') }}"></script>
+<script src="{{ asset('frontend/js/pickadate/picker.date.js') }}"></script>
+<script src="{{ asset('frontend/js/form_validation/jquery.form.js') }}"></script>
+<script src="{{ asset('frontend/js/form_validation/jquery.validate.min.js') }}"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -27,7 +34,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm position-fixed top-0 col-sm-12 col-xs-12" style="z-index:99">
             <div class="container">
                 <a class="navbar-brand m-0 p-0" href="{{ url('/') }}">
-                    <img src="img/logo.jpg" width="60" height="60" alt="" class="position-relative m-0 p-0"/> 
+                    <img src="{{asset('img/logo.jpg')}}" width="60" height="60" alt="" class="position-relative m-0 p-0"/> 
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -36,22 +43,39 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                        @if (Auth::user()->rol ==1)
-                        <a class="nav-link" href="{{ url('home') }}">Inicio</a>
-                        @else if(Auth::user()->rol ==2)
-                        <a class="nav-link" href="{{ url('portada') }}">Inicio</a>
-                        <a class="nav-link" href="{{ url('home') }}">Tablero</a>
+                        @if(Auth::check() && Auth::user()->rol == 1)
+                            <a class="nav-link" href="{{ url('') }}">Inicio</a>
+                        @elseif(Auth::check() && Auth::user()->rol == 2)
+                            <a class="nav-link" href="{{ url('') }}">Inicio</a>
+                        <!--<a class="nav-link" href="{{ url('home') }}">Tablero</a>-->
+                        @else
+                        <a class="nav-link" href="{{ url('') }}">Inicio</a>
                         @endif
                         </li>
+                        @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('products') }}">Productos</a>
+                            <a class="nav-link" href="{{ url('store') }}">Productos</a>
+                        </li>
+                        @endguest
+
+                        @if(Auth::check() && Auth::user()->rol == 1)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('products') }}">Control de inventario</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('invoices') }}">Control de Pedidos</a>
+                            <a class="nav-link" href="{{ url('invoice') }}">Control de Pedidos</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('users') }}">Control de clientes</a>
+                        </li>
+                        @endif
+
+                        @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('contact') }}">Contacto</a>
                         </li>
+                        @endguest
                     </ul>
                     
                     <!-- Right Side Of Navbar -->
@@ -77,22 +101,17 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end z-index" aria-labelledby="navbarDropdown">
                                     
-                                @if (Auth::user()->rol ==2)
-                                 <a class="dropdown-item" href="./users/{{ Auth::user()->id }}/edit">
+                                @if(Auth::check() && Auth::user()->rol == 2)
+                                 <a class="dropdown-item" href="{{ url('users') }}/{{ Auth::user()->id }}/edit">
                                       Actualizar información
                                     </a>
                                 @endif
-                                @if (Auth::user()->rol ==1)
+                                @if(Auth::check() && Auth::user()->rol == 1)
                                     <a class="dropdown-item" href="{{ url('settings') }}"> Configurar empresa </a>
                                 @endif
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Cerrar sesión
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                                    <a class="dropdown-item" href="{{ route('logout') }}">  Cerrar sesión </a>
+                    
+                                
                                 </div>
                             </li>
                         @endguest

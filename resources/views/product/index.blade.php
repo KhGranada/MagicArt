@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Product') }}
+                              Control de inventario
                             </span>
 
                              <div class="float-right">
@@ -34,10 +34,9 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
+                                        <th></th>
                                         <th>No</th>
-                                        
 										<th>Nombre</th>
-										<th>Image</th>
 										<th>Precio</th>
 										<th>Stock</th>
 										<th>Color</th>
@@ -52,9 +51,8 @@
                                     @foreach ($products as $product)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            
+											<td><img src="{{ $product->image }}" style="max-width:90px"></td>
 											<td>{{ $product->nombre }}</td>
-											<td>{{ $product->image }}</td>
 											<td>{{ $product->precio }}</td>
 											<td>{{ $product->stock }}</td>
 											<td>{{ $product->color }}</td>

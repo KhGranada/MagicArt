@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Controllers\ChartJSController;
+use App\Models\Invoice;
+
 
 use Illuminate\Http\Request;
 
@@ -24,6 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $invoices = Invoice::all();
+        return view('home')->with([
+            'invoices' => $invoices, 
+        ]);
     }
 }

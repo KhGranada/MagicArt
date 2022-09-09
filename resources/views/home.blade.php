@@ -16,17 +16,32 @@
                         </div>
                     @endif
                                        
-                    <div class="col-sm-8 col-xs-12">
+                    <div class="col-sm-12 col-xs-12">
                         <h4>Mis compras</h4>
-                        <div class="">
-                            <b>N° de compra</b>
-
+                        <div class="table-responsive">
+                            <table class="table card-table">
+                                <thead>
+                                <tr>
+                                    <th>{{ __('Frontend/frontend.customer_name') }}</th>
+                                    <th>{{ __('Frontend/frontend.customer_email') }}</th>
+                                    <th>{{ __('Frontend/frontend.invoice_date') }}</th>
+                                    <th>{{ __('Frontend/frontend.total_due') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($invoices as $invoice)
+                                    <tr>
+                                    <td><a href="{{ route('invoice.show', $invoice) }}">{{ $invoice->customer_name }}</a></td>
+                                    <td><a href="{{ route('invoice.show', $invoice) }}">{{ $invoice->customer_email }}</a></td>
+                                    <td>{{ $invoice->invoice_date }}</td>
+                                    <td>{{ $invoice->total_due }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="col-sm-4 col-xs-12">
-                        <h4>Mis pedidos pendientes</h4>
-                        <div class=""></div>
-                    </div>
+                    
                 </div>
             </div>
             @endif 

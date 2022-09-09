@@ -19,11 +19,20 @@ class SettingController extends Controller
     public function index()
     {
         $id=1;
-        $setting = Setting::find($id);
-
-        
+        $setting = Setting::find($id);      
+        if($setting==1){
         return view('setting.edit', compact('setting'));
+        } else {
+            $setting = new Setting();
+            return view('setting.create', compact('setting'));
+        }
         
+    }
+
+    public function create()
+    {
+        $setting = new Setting();
+        return view('setting.create', compact('setting'));
     }
 
     /**
@@ -47,23 +56,6 @@ class SettingController extends Controller
     {
         request()->validate(Setting::$rules);
 
-        $setting = Setting::create($request->all());
-
-        $validatedData = $request->validate([
-            'file' => 'required|csv,txt,xlx,xls,pdf|max:2048',
-    
-           ]);
-    
-           $name = $request->file('file')->getClientOriginalName();
-    
-           $path = $request->file('file')->store('public/files');
-    
-    
-           $save = new File;
-    
-           $save->name = $name;
-           $save->path = $path;
-           
         return redirect()->route('settings.index')
             ->with('success', 'Configuración de empresa creada con exito.');
     }
@@ -81,7 +73,7 @@ class SettingController extends Controller
 
         $setting->update($request->all());
 
-        return redirect()->route('settings.index')
+        return redirect()->route('settings.edit')
             ->with('success', 'Setting updated successfully');
     }
 

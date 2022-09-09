@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class UserController
@@ -18,10 +19,13 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (Auth::check()) {
         $users = User::paginate();
-
         return view('user.index', compact('users'))
             ->with('i', (request()->input('page', 1) - 1) * $users->perPage());
+        } else{
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -31,6 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        
         $user = new User();
         return view('user.create', compact('user'));
     }
@@ -43,12 +48,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if (Auth::check()) {
         request()->validate(User::$rules);
-
         $user = User::create($request->all());
-
         return redirect()->route('users.index')
             ->with('success', 'User created successfully.');
+        } else{
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -59,9 +66,13 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        if (Auth::check()) {
         $user = User::find($id);
 
         return view('user.show', compact('user'));
+        } else{
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -72,9 +83,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if (Auth::check()) {
         $user = User::find($id);
 
         return view('user.edit', compact('user'));
+        } else{
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -86,12 +101,16 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        if (Auth::check()) {
         request()->validate(User::$rules);
 
         $user->update($request->all());
 
         return redirect()->route('users.index')
             ->with('success', 'User updated successfully');
+        } else{
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -101,9 +120,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if (Auth::check()) {
         $user = User::find($id)->delete();
 
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
+        } else{
+            return redirect()->route('login');
+        }
     }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        return redirect()->route('login');
+    }
+
+    
 }

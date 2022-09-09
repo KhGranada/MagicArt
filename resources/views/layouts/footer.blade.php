@@ -76,10 +76,10 @@
             Usuarios
           </h6>
           <p>
-            <a href="#!" class="text-reset">Inicio de sesion</a>
+            <a href="{{ url('login') }}" class="text-reset">Inicio de sesion</a>
           </p>
           <p>
-            <a href="#!" class="text-reset">Registrate</a>
+            <a href="{{ url('register') }}" class="text-reset">Registrate</a>
           </p>
           <p>
             <a href="#!" class="text-reset">Politicas de privacidad</a>

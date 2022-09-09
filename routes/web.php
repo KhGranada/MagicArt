@@ -18,13 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/portada', function () {
+Route::get('/', function () {
     return view('portada');
 });
 
 
 Route::resource('products', ProductController::class);
-Route::resource('facturacions', ProductController::class);
+Route::get('/store', [ProductController::class, 'frontal']);
+
+
 Route::resource('users', UserController::class);
 Route::resource('settings', SettingController::class);
 
@@ -34,11 +36,11 @@ Route::get('/contact', [ContactController::class, 'createForm']);
 Route::post('/contact', [ContactController::class, 'ContactUsForm'])->name('contact.store');
 
 //order/invoices
-Route::resource('invoices', InvoiceController::class);
-Route::get('/getPrice/{id}', 'RecieptController@getPrice'); // for get city list
-
-//chartJS
-Route::get('chart-js', [ChartJSController::class, 'index']);
+Route::resource('invoice', InvoiceController::class);
+//Route::get('/getPrice/{id}', 'RecieptController@getPrice'); // for get city list
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('logout', [UserController::class, 'logout'])->name('logout');
+
