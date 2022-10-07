@@ -64,6 +64,5 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 =======
-# MagicArt
-CRM para proyecto final ADSI
+
 >>>>>>> 76917c928c98b821a04e64fa240d8cd996984b87
